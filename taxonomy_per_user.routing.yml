@@ -1,0 +1,55 @@
+
+entity.taxonomy_per_user.canonical:
+  path: '/taxonomy_per_user/{taxonomy_per_user}'
+  defaults:
+  # Calls the view controller, defined in the annotation of the taxonomy_per_user entity
+    _entity_view: 'taxonomy_per_user'
+    _title: 'TaxonomyPerUser Content'
+  requirements:
+  # Calls the access controller of the entity, $operation 'view'
+    _entity_access: 'taxonomy_per_user.view'
+
+entity.taxonomy_per_user.collection:
+  path: '/taxonomy_per_user/list'
+  defaults:
+  # Calls the list controller, defined in the annotation of the taxonomy_per_user entity.
+    _entity_list: 'taxonomy_per_user'
+    _title: 'TaxonomyPerUser List'
+  requirements:
+  # Checks for permission directly.
+    _permission: 'view taxonomy per user entity'
+
+taxonomy_per_user.add:
+  path: '/taxonomy_per_user/add'
+  defaults:
+  # Calls the form.add controller, defined in the taxonomy_per_user entity.
+    _entity_form: taxonomy_per_user.add
+    _title: 'Add TaxonomyPerUser'
+  requirements:
+    _entity_create_access: 'taxonomy_per_user'
+
+entity.taxonomy_per_user.edit_form:
+  path: '/taxonomy_per_user/{taxonomy_per_user}/edit'
+  defaults:
+  # Calls the form.edit controller, defined in the taxonomy_per_user entity.
+    _entity_form: taxonomy_per_user.edit
+    _title: 'Edit TaxonomyPerUser'
+  requirements:
+    _entity_access: 'taxonomy_per_user.edit'
+
+entity.taxonomy_per_user.delete_form:
+  path: '/taxonomy_per_user/{taxonomy_per_user}/delete'
+  defaults:
+    # Calls the form.delete controller, defined in the taxonomy_per_user entity.
+    _entity_form: taxonomy_per_user.delete
+    _title: 'Delete TaxonomyPerUser'
+  requirements:
+    _entity_access: 'taxonomy_per_user.delete'
+
+taxonomy_per_user.settings:
+  path: 'admin/structure/taxonomy_per_user_settings'
+  defaults:
+    _form: '\Drupal\taxonomy_per_user\Form\TaxonomyPerUserSettingsForm'
+    _title: 'Taxonomy Per User Settings'
+  requirements:
+    _permission: 'administer taxonomy per user entity'

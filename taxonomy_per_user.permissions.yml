@@ -1,0 +1,10 @@
+'delete taxonomy per user entity':
+  title: Delete entity content.
+'add taxonomy per user entity':
+  title: Add entity content
+'view taxonomy per user entity':
+  title: View entity content
+'edit taxonomy per user entity':
+  title: Edit entity content
+'administer taxonomy per user entity':
+  title: Administer settings
