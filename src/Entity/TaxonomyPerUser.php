@@ -115,10 +115,18 @@ class TaxonomyPerUser extends ContentEntityBase implements TaxonomyPerUserInterf
   public function getLabel() {
     return $this->get('label')->value;
   }
+
   /**
    * {@inheritdoc}
    */
-  public function getTargetId() {
+  public function getVocabulary() {
+    return $this->get('target_id')->entity;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getVocabularyId() {
     return $this->get('target_id')->target_id;
   }
 

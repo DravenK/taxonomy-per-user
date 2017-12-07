@@ -90,7 +90,7 @@ class TaxonomyPerUserListBuilder extends EntityListBuilder {
     $row['id'] = $entity->id();
     $row['label'] = $entity->link();
     $row['user_id'] = $entity->getOwner()->getAccountName();
-    $row['target_id'] = $entity->getTargetId();
+    $row['target_id'] = $entity->getVocabulary()->link();
     return $row + parent::buildRow($entity);
   }
 
