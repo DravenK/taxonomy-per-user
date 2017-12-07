@@ -43,7 +43,7 @@ use Drupal\Core\Entity\EntityChangedTrait;
  *     "delete-form" = "/taxonomy_per_user/{taxonomy_per_user}/delete",
  *     "collection" = "/taxonomy_per_user/list"
  *   },
- *   field_ui_base_route = "taxonomy_per_user.taxonomy_per_user_settings",
+ *   field_ui_base_route = "taxonomy_per_user.settings",
  * )
  *
  */
