@@ -10,14 +10,6 @@
  * @ingroup taxonomy_per_user
  * @{
  *
- * This module demonstrates implementing a content entity.
- *
- * TaxonomyPerUser is a fieldable content entity used to hold structured information
- * without the overhead of using a node content type. 'Fieldable' means you can
- * attach fields to it, like you can with nodes. It is defined programmatically
- * (completely in code). We will show the main techniques to handle and expose
- * the contents of this entity type.
- *
  * The Taxonomy Per User entity will demonstrate the main tasks for an entity:
  * - define
  * - save

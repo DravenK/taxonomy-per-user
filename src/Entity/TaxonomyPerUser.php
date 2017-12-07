@@ -26,7 +26,7 @@ use Drupal\Core\Entity\EntityChangedTrait;
  *     "form" = {
  *       "add" = "Drupal\taxonomy_per_user\Form\TaxonomyPerUserForm",
  *       "edit" = "Drupal\taxonomy_per_user\Form\TaxonomyPerUserForm",
- *       "delete" = "Drupal\taxonomy_per_user\Form\ContactDeleteForm",
+ *       "delete" = "Drupal\taxonomy_per_user\Form\TaxonomyPerUserDeleteForm",
  *     },
  *     "access" = "Drupal\taxonomy_per_user\TaxonomyPerUserAccessControlHandler",
  *   },
@@ -35,14 +35,12 @@ use Drupal\Core\Entity\EntityChangedTrait;
  *   admin_permission = "administer taxonomy_per_user entity",
  *   entity_keys = {
  *     "id" = "id",
- *     "label" = "name",
  *     "uuid" = "uuid",
- *     "vid" = "vid"
  *   },
  *   links = {
  *     "canonical" = "/taxonomy_per_user/{taxonomy_per_user}",
  *     "edit-form" = "/taxonomy_per_user/{taxonomy_per_user}/edit",
- *     "delete-form" = "/tpu/{taxonomy_per_user}/delete",
+ *     "delete-form" = "/taxonomy_per_user/{taxonomy_per_user}/delete",
  *     "collection" = "/taxonomy_per_user/list"
  *   },
  *   field_ui_base_route = "taxonomy_per_user.taxonomy_per_user_settings",
@@ -112,6 +110,19 @@ class TaxonomyPerUser extends ContentEntityBase implements TaxonomyPerUserInterf
 
   /**
    * {@inheritdoc}
+   */
+  public function getLabel() {
+    return $this->get('label')->value;
+  }
+  /**
+   * {@inheritdoc}
+   */
+  public function getTargetId() {
+    return $this->get('target_id')->target_id;
+  }
+
+  /**
+   * {@inheritdoc}
    *
    * Define the field properties here.
    *
@@ -134,10 +145,26 @@ class TaxonomyPerUser extends ContentEntityBase implements TaxonomyPerUserInterf
       ->setDescription(t('The UUID of the TaxonomyPerUser entity.'))
       ->setReadOnly(TRUE);
 
-    // Owner field of the tpu.
-    // Entity reference field, holds the reference to the user object.
-    // The view shows the user name field of the user.
-    // The form presents a auto complete field for the user name.
+    $fields['label'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Title'))
+      ->setDescription(t('The title of the TaxonomyPerUser entity.'))
+      ->setSettings([
+        'max_length' => 255,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue(NULL)
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -6,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -6,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('User Name'))
       ->setDescription(t('The Name of the associated user.'))
@@ -146,7 +173,7 @@ class TaxonomyPerUser extends ContentEntityBase implements TaxonomyPerUserInterf
       ->setDisplayOptions('view', [
         'label' => 'above',
         'type' => 'author',
-        'weight' => -3,
+        'weight' => -5,
       ])
       ->setDisplayOptions('form', [
         'type' => 'entity_reference_autocomplete',
@@ -155,56 +182,37 @@ class TaxonomyPerUser extends ContentEntityBase implements TaxonomyPerUserInterf
           'size' => 60,
           'placeholder' => '',
         ],
-        'weight' => -3,
+        'weight' => -5,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['vid'] = BaseFieldDefinition::create('entity_reference')
+    // Borrowed this logic from the Comment module.
+    // Warning! May change in the future: https://www.drupal.org/node/2346347
+    // The target type is set to a config entity to force a string field
+    // for the entity ID.
+    // @see https://www.drupal.org/node/1757452.
+    $fields['target_id'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Vocabulary'))
-      ->setDescription(t('The vocabulary to which the Taxonomy Per User is assigned.'))
+      ->setDescription(t('The vocabulary to add to the taxonomy_per_user.'))
       ->setSetting('target_type', 'taxonomy_vocabulary')
-      ->setSetting('handler', 'default')
       ->setDisplayOptions('view', [
         'label' => 'above',
-        'type' => 'author',
-        'weight' => -3,
+        'type' => 'taxonomy_vocabulary',
+        'weight' => -4,
       ])
       ->setDisplayOptions('form', [
         'type' => 'entity_reference_autocomplete',
+        'weight' => -4,
         'settings' => [
           'match_operator' => 'CONTAINS',
-          'size' => 60,
+          'size' => '60',
           'placeholder' => '',
         ],
-        'weight' => -3,
-      ]);
-
-
-    // Role field for the tpu.
-    // The values shown in options are 'administrator' and 'user'.
-    $fields['role'] = BaseFieldDefinition::create('list_string')
-      ->setLabel(t('Role'))
-      ->setDescription(t('The role of the TaxonomyPerUser entity.'))
-      ->setSettings([
-        'allowed_values' => [
-          'administrator' => 'administrator',
-          'user' => 'user',
-        ],
       ])
-      // Set the default value of this field to 'user'.
-      ->setDefaultValue('user')
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => -2,
-      ])
-      ->setDisplayOptions('form', [
-        'type' => 'options_select',
-        'weight' => -2,
-      ])
+      ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+      ->setRequired(TRUE);
 
     $fields['langcode'] = BaseFieldDefinition::create('language')
       ->setLabel(t('Language code'))

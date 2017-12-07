@@ -34,7 +34,7 @@ class TaxonomyPerUserForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    $form_state->setRedirect('entity.taxonomy_per_user_tpu.collection');
+    $form_state->setRedirect('entity.taxonomy_per_user.collection');
     $entity = $this->getEntity();
     $entity->save();
   }

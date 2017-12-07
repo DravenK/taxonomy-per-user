@@ -29,7 +29,7 @@ class TaxonomyPerUserListBuilder extends EntityListBuilder {
   public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
     return new static(
       $entity_type,
-      $container->get('entity.manager')->getStorage($entity_type->id()),
+      $container->get('entity_type.manager')->getStorage($entity_type->id()),
       $container->get('url_generator')
     );
   }
@@ -75,8 +75,10 @@ class TaxonomyPerUserListBuilder extends EntityListBuilder {
    * and inserts the 'edit' and 'delete' links as defined for the entity type.
    */
   public function buildHeader() {
-    $header['id'] = $this->t('Taxonomy Per User ID');
-    $header['role'] = $this->t('Role');
+    $header['id'] = $this->t('ID');
+    $header['label'] = $this->t('Title');
+    $header['user_id'] = $this->t('User');
+    $header['target_id'] = $this->t('Vocabulary');
     return $header + parent::buildHeader();
   }
 
@@ -86,7 +88,9 @@ class TaxonomyPerUserListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\taxonomy_per_user\Entity\TaxonomyPerUser */
     $row['id'] = $entity->id();
-    $row['role'] = $entity->role->value;
+    $row['label'] = $entity->getLabel();
+    $row['user_id'] = $entity->getOwner()->getAccountName();
+    $row['target_id'] = $entity->getTargetId();
     return $row + parent::buildRow($entity);
   }
 

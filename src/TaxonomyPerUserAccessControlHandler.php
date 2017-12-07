@@ -23,13 +23,13 @@ class TaxonomyPerUserAccessControlHandler extends EntityAccessControlHandler {
   protected function checkAccess(EntityInterface $entity, $operation, AccountInterface $account) {
     switch ($operation) {
       case 'view':
-        return AccessResult::allowedIfHasPermission($account, 'view taxonomy per user  entity');
+        return AccessResult::allowedIfHasPermission($account, 'view taxonomy_per_user entity');
 
       case 'edit':
-        return AccessResult::allowedIfHasPermission($account, 'edit taxonomy per user  entity');
+        return AccessResult::allowedIfHasPermission($account, 'edit taxonomy_per_user entity');
 
       case 'delete':
-        return AccessResult::allowedIfHasPermission($account, 'delete taxonomy per user  entity');
+        return AccessResult::allowedIfHasPermission($account, 'delete taxonomy_per_user entity');
     }
     return AccessResult::allowed();
   }
@@ -41,7 +41,7 @@ class TaxonomyPerUserAccessControlHandler extends EntityAccessControlHandler {
    * will be created during the 'add' process.
    */
   protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
-    return AccessResult::allowedIfHasPermission($account, 'add taxonomy per user  entity');
+    return AccessResult::allowedIfHasPermission($account, 'add taxonomy_per_user entity');
   }
 
 }

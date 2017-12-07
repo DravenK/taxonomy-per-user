@@ -18,7 +18,7 @@ class TaxonomyPerUserSettingsForm extends FormBase {
    *   The unique string identifying the form.
    */
   public function getFormId() {
-    return 'taxonomy_per_user_settings';
+    return 'taxonomy_per_user.settings';
   }
 
   /**
@@ -32,7 +32,7 @@ class TaxonomyPerUserSettingsForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $form['taxonomy_per_user_settings']['#markup'] = 'Settings form for Taxonomy Pe rUser. Manage field settings here.';
+    $form['taxonomy_per_user.settings']['#markup'] = 'Settings form for Taxonomy Per User. Manage field settings here.';
     return $form;
   }
 

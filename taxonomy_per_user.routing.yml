@@ -17,7 +17,7 @@ entity.taxonomy_per_user.collection:
     _title: 'TaxonomyPerUser List'
   requirements:
   # Checks for permission directly.
-    _permission: 'view taxonomy per user entity'
+    _permission: 'view taxonomy_per_user entity'
 
 taxonomy_per_user.add:
   path: '/taxonomy_per_user/add'
@@ -52,4 +52,4 @@ taxonomy_per_user.settings:
     _form: '\Drupal\taxonomy_per_user\Form\TaxonomyPerUserSettingsForm'
     _title: 'Taxonomy Per User Settings'
   requirements:
-    _permission: 'administer taxonomy per user entity'
+    _permission: 'administer taxonomy_per_user entity'
