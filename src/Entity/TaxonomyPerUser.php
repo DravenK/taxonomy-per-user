@@ -35,13 +35,14 @@ use Drupal\Core\Entity\EntityChangedTrait;
  *   admin_permission = "administer taxonomy_per_user entity",
  *   entity_keys = {
  *     "id" = "id",
+ *     "label" = "label",
  *     "uuid" = "uuid",
  *   },
  *   links = {
  *     "canonical" = "/taxonomy_per_user/{taxonomy_per_user}",
  *     "edit-form" = "/taxonomy_per_user/{taxonomy_per_user}/edit",
  *     "delete-form" = "/taxonomy_per_user/{taxonomy_per_user}/delete",
- *     "collection" = "/taxonomy_per_user/list"
+ *      "collection" = "/admin/structure/taxonomy_per_user/overview",
  *   },
  *   field_ui_base_route = "taxonomy_per_user.settings",
  * )

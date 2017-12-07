@@ -88,7 +88,7 @@ class TaxonomyPerUserListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     /* @var $entity \Drupal\taxonomy_per_user\Entity\TaxonomyPerUser */
     $row['id'] = $entity->id();
-    $row['label'] = $entity->getLabel();
+    $row['label'] = $entity->link();
     $row['user_id'] = $entity->getOwner()->getAccountName();
     $row['target_id'] = $entity->getTargetId();
     return $row + parent::buildRow($entity);
