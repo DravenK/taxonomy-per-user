@@ -1,6 +1,6 @@
 name: Taxonomy Per User
 type: module
-description: ''
+description: 'Assign the permissions of the vocabulary to the user.'
 package: Taxonomy Per User
 core: 8.x
 
