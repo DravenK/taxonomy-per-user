@@ -27,7 +27,9 @@ abstract class TaxonomyPerUserAccessCheck {
       ->condition('user_id,',$uid)
       ->execute()->fetchField();
 
-    if(!empty($tpu)) {
+    // If $tpu not empty is mean this user assigned permission form taxonomy_per_user.
+    // If the $vid is empty, fix taxonomy overview_form page.
+    if(!empty($tpu) || empty($vid)) {
       return TRUE;
     }
 
