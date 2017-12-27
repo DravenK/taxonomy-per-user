@@ -2,8 +2,6 @@
 
 namespace Drupal\taxonomy_per_user\Entity;
 
-use Drupal\Core\Annotation\Translation;
-use Drupal\Core\Entity\Annotation\ContentEntityType;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\ContentEntityBase;
@@ -44,9 +42,8 @@ use Drupal\Core\Entity\EntityChangedTrait;
  *     "delete-form" = "/taxonomy_per_user/{taxonomy_per_user}/delete",
  *      "collection" = "/admin/structure/taxonomy_per_user/overview",
  *   },
- *   field_ui_base_route = "taxonomy_per_user.settings",
- * )
  *
+ * )
  */
 class TaxonomyPerUser extends ContentEntityBase implements TaxonomyPerUserInterface {
 
@@ -172,7 +169,8 @@ class TaxonomyPerUser extends ContentEntityBase implements TaxonomyPerUserInterf
         'weight' => -6,
       ])
       ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+      ->setDisplayConfigurable('view', TRUE)
+      ->setRequired(TRUE);
 
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('User Name'))
@@ -194,7 +192,8 @@ class TaxonomyPerUser extends ContentEntityBase implements TaxonomyPerUserInterf
         'weight' => -5,
       ])
       ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
+      ->setDisplayConfigurable('view', TRUE)
+      ->setRequired(TRUE);
 
     // Borrowed this logic from the Comment module.
     // Warning! May change in the future: https://www.drupal.org/node/2346347
@@ -223,9 +222,6 @@ class TaxonomyPerUser extends ContentEntityBase implements TaxonomyPerUserInterf
       ->setDisplayConfigurable('form', TRUE)
       ->setRequired(TRUE);
 
-    $fields['langcode'] = BaseFieldDefinition::create('language')
-      ->setLabel(t('Language code'))
-      ->setDescription(t('The language code of ContentEntityExample entity.'));
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))
       ->setDescription(t('The time that the entity was created.'));

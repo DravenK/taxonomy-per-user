@@ -6,14 +6,14 @@ use Drupal\Core\Routing\RouteSubscriberBase;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
- * Class RouteSubscriber
+ * Class RouteSubscriber.
  *
  * @package Drupal\gvocab\Routing
  */
 class RouteSubscriber extends RouteSubscriberBase {
 
   /**
-   * @param \Symfony\Component\Routing\RouteCollection $collection
+   * {@inheritdoc}
    */
   public function alterRoutes(RouteCollection $collection) {
     // For all the necessary admin routes grant permission
@@ -31,7 +31,7 @@ class RouteSubscriber extends RouteSubscriberBase {
       $route->setRequirements([
         '_custom_access' => '\taxonomy_per_user_route_access',
       ]);
-      $route->setOption('op', 'list terms');
+      $route->setOption('op', 'List');
     }
 
     // Vocabulary Edit form -
@@ -56,12 +56,21 @@ class RouteSubscriber extends RouteSubscriberBase {
       ]);
     }
 
+    // Overview page.
+    // admin/structure/taxonomy/manage/{taxonomy_term}/overview.
+    if ($route = $collection->get('entity.taxonomy_term.canonical')) {
+      $route->setRequirements([
+        '_custom_access' => '\taxonomy_per_user_route_access',
+      ]);
+      $route->setOption('op', 'List');
+    }
+
     // Term Edit page - taxonomy/term/{taxonomy_term}/edit.
     if ($route = $collection->get('entity.taxonomy_term.edit_form')) {
       $route->setRequirements([
         '_custom_access' => '\taxonomy_per_user_route_access',
       ]);
-      $route->setOption('op', 'edit terms');
+      $route->setOption('op', 'Edit');
     }
 
     // Term Create page - taxonomy/term/{taxonomy_term}/edit.
@@ -69,7 +78,7 @@ class RouteSubscriber extends RouteSubscriberBase {
       $route->setRequirements([
         '_custom_access' => '\taxonomy_per_user_route_access',
       ]);
-      $route->setOption('op', 'create terms');
+      $route->setOption('op', 'Create');
     }
 
     // Term delete - taxonomy/term/{taxonomy_term}/delete.
@@ -77,7 +86,7 @@ class RouteSubscriber extends RouteSubscriberBase {
       $route->setRequirements([
         '_custom_access' => '\taxonomy_per_user_route_access',
       ]);
-      $route->setOption('op', 'delete terms');
+      $route->setOption('op', 'Delete');
     }
 
     $route->setOption('op', '');

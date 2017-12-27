@@ -1,13 +1,7 @@
-
 # Define the menu links for this module
-
 entity.taxonomy_per_user.collection:
   title: 'Taxonomy Per User Listing'
   route_name: entity.taxonomy_per_user.collection
   description: 'List Taxonomy Per User'
+  parent: system.admin_config_system
   weight: 10
-taxonomy_per_user.admin.structure.settings:
-  title: TaxonomyPerUser Settings
-  description: 'Configure taxonomy_per_user entity'
-  route_name:  taxonomy_per_user.settings
-  parent: system.admin_structure

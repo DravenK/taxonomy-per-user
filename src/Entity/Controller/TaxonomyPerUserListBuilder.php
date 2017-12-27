@@ -51,17 +51,8 @@ class TaxonomyPerUserListBuilder extends EntityListBuilder {
 
   /**
    * {@inheritdoc}
-   *
-   * We override ::render() so that we can add our own content above the table.
-   * parent::render() is where EntityListBuilder creates the table using our
-   * buildHeader() and buildRow() implementations.
    */
   public function render() {
-    $build['description'] = [
-      '#markup' => $this->t('Taxonomy Per User', [
-        '@adminlink' => $this->urlGenerator->generateFromRoute('taxonomy_per_user.settings'),
-      ]),
-    ];
     $build['table'] = parent::render();
     return $build;
   }

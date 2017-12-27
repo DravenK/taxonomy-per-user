@@ -1,10 +1,4 @@
 # Define the 'local' links for the module
-
-taxonomy_per_user.settings_tab:
-  route_name: taxonomy_per_user.settings
-  title: Settings
-  base_route: taxonomy_per_user.settings
-
 taxonomy_per_user.view:
   route_name: entity.taxonomy_per_user.canonical
   base_route: entity.taxonomy_per_user.canonical

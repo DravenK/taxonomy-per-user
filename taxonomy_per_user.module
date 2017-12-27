@@ -15,7 +15,7 @@ use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy_per_user\TaxonomyPerUserAccessCheck;
 
 /**
- * @param array $entity_types
+ * Implements hook_entity_type_alter().
  */
 function taxonomy_per_user_entity_type_alter(array &$entity_types) {
   /* @var $entity_types \Drupal\Core\Entity\EntityTypeInterface[] */
@@ -23,31 +23,21 @@ function taxonomy_per_user_entity_type_alter(array &$entity_types) {
 }
 
 /**
- * @param \Symfony\Component\Routing\Route $route
- * @param \Drupal\Core\Routing\RouteMatchInterface $match
- * @param \Drupal\Core\Session\AccountInterface $account
- *
- * @return \Drupal\Core\Access\AccessResultAllowed|\Drupal\Core\Access\AccessResultForbidden
- *
+ * Route access callback.
  */
 function taxonomy_per_user_route_access(Route $route, RouteMatchInterface $match, AccountInterface $account) {
   $op = $route->getOption('op');
   $vocabulary = $match->getParameter('taxonomy_vocabulary');
   $term_id = $match->getRawParameters()->getDigits('taxonomy_term');
 
-  if ($match->getRouteName() == 'entity.taxonomy_term.delete_form') {
-    $op = 'delete terms';
-  };
-
-  if ((!$vocabulary) && !empty($term_id)) {
+  if (is_null($vocabulary) && !empty($term_id)) {
     $vocabulary_id = Term::load($term_id)->bundle();
 
-    if (TaxonomyPerUserAccessCheck::vocabularyTermCheckAccess($op, $vocabulary_id, $account)->isAllowed()) {
+    if (TaxonomyPerUserAccessCheck::vocabularyTermCheckAccess($op, $vocabulary_id, $account)->isAllowed()
+      || TaxonomyPerUserAccessCheck::checkCreatorAccess($op, $vocabulary_id)->isAllowed()) {
       return AccessResult::allowed();
     }
-    elseif (TaxonomyPerUserAccessCheck::checkCreatorAccess($op, $vocabulary_id)) {
-      return AccessResult::allowed();
-    };
+    return AccessResult::forbidden();
 
   }
   elseif ($vocabulary && is_string($vocabulary)) {
@@ -62,7 +52,7 @@ function taxonomy_per_user_route_access(Route $route, RouteMatchInterface $match
     $vocabulary_id = $vocabulary->id();
   }
 
-  if (TaxonomyPerUserAccessCheck::checkCreatorAccess($op, $vocabulary_id)) {
+  if (TaxonomyPerUserAccessCheck::checkCreatorAccess($op, $vocabulary_id)->isAllowed()) {
     return AccessResult::allowed();
   }
 
@@ -70,11 +60,8 @@ function taxonomy_per_user_route_access(Route $route, RouteMatchInterface $match
 
 }
 
-
 /**
- * @param \Drupal\Core\Entity\EntityInterface $entity
- *
- * @return \Drupal\Core\Access\AccessResultAllowed|\Drupal\Core\Access\AccessResultNeutral
+ * Implements hook_entity_access().
  */
 function taxonomy_per_user_entity_access(EntityInterface $entity) {
   if ($entity->getEntityTypeId() == 'taxonomy_vocabulary'

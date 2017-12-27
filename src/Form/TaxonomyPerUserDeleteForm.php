@@ -7,7 +7,9 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
 /**
- * Class TaxonomyPerUserDeleteForm
+ * Class TaxonomyPerUserDeleteForm.
+ *
+ * Provides a confirmation form for deleting a TaxonomyPerUser entity.
  *
  * @package Drupal\taxonomy_per_user\Form
  */

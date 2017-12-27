@@ -3,7 +3,6 @@
 namespace Drupal\taxonomy_per_user\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
-use Drupal\Core\Language\Language;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
@@ -19,14 +18,7 @@ class TaxonomyPerUserForm extends ContentEntityForm {
   public function buildForm(array $form, FormStateInterface $form_state) {
     /* @var $entity \Drupal\taxonomy_per_user\Entity\TaxonomyPerUser */
     $form = parent::buildForm($form, $form_state);
-    $entity = $this->entity;
 
-    $form['langcode'] = [
-      '#title' => $this->t('Language'),
-      '#type' => 'language_select',
-      '#default_value' => $entity->getUntranslated()->language()->getId(),
-      '#languages' => Language::STATE_ALL,
-    ];
     return $form;
   }
 

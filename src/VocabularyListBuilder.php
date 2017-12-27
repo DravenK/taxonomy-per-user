@@ -12,13 +12,13 @@ use Drupal\taxonomy\VocabularyListBuilder as VocabularyListBuilderBase;
 class VocabularyListBuilder extends VocabularyListBuilderBase {
 
   /**
-   * @return \Drupal\Core\Entity\EntityInterface[]
+   * {@inheritdoc}
    */
   public function load() {
     $entities = parent::load();
     // Remove vocabularies the current user doesn't have any access for.
     foreach ($entities as $id => $entity) {
-      if (!TaxonomyPerUserAccessCheck::checkCreatorAccess('list terms', $id)) {
+      if (!TaxonomyPerUserAccessCheck::checkCreatorAccess('List', $id)->isAllowed()) {
         unset($entities[$id]);
       }
     }

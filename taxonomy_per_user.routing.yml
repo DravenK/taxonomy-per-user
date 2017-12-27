@@ -1,10 +1,9 @@
-
 entity.taxonomy_per_user.canonical:
   path: '/taxonomy_per_user/{taxonomy_per_user}'
   defaults:
   # Calls the view controller, defined in the annotation of the taxonomy_per_user entity
     _entity_view: 'taxonomy_per_user'
-    _title: 'TaxonomyPerUser Content'
+    _title: 'Taxonomy Per User Content'
   requirements:
   # Calls the access controller of the entity, $operation 'view'
     _entity_access: 'taxonomy_per_user.view'
@@ -24,7 +23,7 @@ taxonomy_per_user.add:
   defaults:
   # Calls the form.add controller, defined in the taxonomy_per_user entity.
     _entity_form: taxonomy_per_user.add
-    _title: 'Add TaxonomyPerUser'
+    _title: 'Add Taxonomy Per User'
   requirements:
     _entity_create_access: 'taxonomy_per_user'
 
@@ -33,7 +32,7 @@ entity.taxonomy_per_user.edit_form:
   defaults:
   # Calls the form.edit controller, defined in the taxonomy_per_user entity.
     _entity_form: taxonomy_per_user.edit
-    _title: 'Edit TaxonomyPerUser'
+    _title: 'Edit Taxonomy Per User'
   requirements:
     _entity_access: 'taxonomy_per_user.edit'
 
@@ -42,14 +41,6 @@ entity.taxonomy_per_user.delete_form:
   defaults:
     # Calls the form.delete controller, defined in the taxonomy_per_user entity.
     _entity_form: taxonomy_per_user.delete
-    _title: 'Delete TaxonomyPerUser'
+    _title: 'Delete Taxonomy Per User'
   requirements:
     _entity_access: 'taxonomy_per_user.delete'
-
-taxonomy_per_user.settings:
-  path: 'admin/structure/taxonomy_per_user_settings'
-  defaults:
-    _form: '\Drupal\taxonomy_per_user\Form\TaxonomyPerUserSettingsForm'
-    _title: 'Taxonomy Per User Settings'
-  requirements:
-    _permission: 'administer taxonomy_per_user entity'
