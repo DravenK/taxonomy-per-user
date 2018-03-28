@@ -64,8 +64,10 @@ function taxonomy_per_user_route_access(Route $route, RouteMatchInterface $match
  * Implements hook_entity_access().
  */
 function taxonomy_per_user_entity_access(EntityInterface $entity) {
-  if ($entity->getEntityTypeId() == 'taxonomy_vocabulary'
-    && TaxonomyPerUserAccessCheck::checkCreatorAccess('', $entity->getConfigTarget())) {
+  $entity_type_id = $entity->getEntityTypeId();
+  if ($entity_type_id == 'taxonomy_vocabulary' || ($entity_type_id == 'taxonomy_term'
+    && TaxonomyPerUserAccessCheck::checkCreatorAccess('', $entity->getConfigTarget()))
+   ) {
     return AccessResult::allowed();
   }
 
